@@ -17,7 +17,7 @@
     "re:start": "yarn rm:all && yarn install && yarn dev",
     "re:build": "yarn rm:all && yarn install && yarn build",
     "re:build-npm": "npm run rm:all && npm install && npm run build",
-    "dev:host": "vite --host"
+    "dev:host": "npm vite --host"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
