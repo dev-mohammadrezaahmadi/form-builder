@@ -23,7 +23,10 @@
                 "external": false,
                 "external_type": "",
                 "value": "",
-                "restriction": { "base": "string", "restriction_type": "basic_restriction" }
+                "restriction": {
+                  "base": "string",
+                  "restriction_type": "basic_restriction"
+                }
               }
             },
             {
@@ -488,7 +491,11 @@
                 "restriction": {
                   "base": "string",
                   "restriction_type": "enum_restriction",
-                  "children": ["CODU", "COPY", "DUPL"]
+                  "children": [
+                    "CODU",
+                    "COPY",
+                    "DUPL"
+                  ]
                 }
               }
             },
@@ -504,7 +511,10 @@
                 "external": false,
                 "external_type": "",
                 "value": "",
-                "restriction": { "base": "boolean", "restriction_type": "basic_restriction" }
+                "restriction": {
+                  "base": "boolean",
+                  "restriction_type": "basic_restriction"
+                }
               }
             },
             {
@@ -522,7 +532,10 @@
                 "restriction": {
                   "base": "string",
                   "restriction_type": "enum_restriction",
-                  "children": ["HIGH", "NORM"]
+                  "children": [
+                    "HIGH",
+                    "NORM"
+                  ]
                 }
               }
             },
@@ -549,7 +562,10 @@
                         "external": false,
                         "external_type": "",
                         "value": "",
-                        "restriction": { "base": "string", "restriction_type": "basic_restriction" }
+                        "restriction": {
+                          "base": "string",
+                          "restriction_type": "basic_restriction"
+                        }
                       }
                     },
                     {
@@ -958,7 +974,11 @@
                         "restriction": {
                           "base": "string",
                           "restriction_type": "enum_restriction",
-                          "children": ["CODU", "COPY", "DUPL"]
+                          "children": [
+                            "CODU",
+                            "COPY",
+                            "DUPL"
+                          ]
                         }
                       }
                     },
@@ -974,7 +994,10 @@
                         "external": false,
                         "external_type": "",
                         "value": "",
-                        "restriction": { "base": "string", "restriction_type": "basic_restriction" }
+                        "restriction": {
+                          "base": "string",
+                          "restriction_type": "basic_restriction"
+                        }
                       }
                     }
                   ]

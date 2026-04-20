@@ -13,6 +13,7 @@ import { Form } from 'src/components/hook-form';
 
 import { DynamicField } from './dynamic-field';
 import { generateZodSchema } from './dynamic-schema';
+import { fillSchemaWithData } from './fill-schema';
 
 export default function DashboardView() {
   const [schema, setSchema] = useState(null);
@@ -27,6 +28,7 @@ export default function DashboardView() {
 
   const methods = useForm({
     resolver: zodResolver(dynamicSchema),
+    shouldUnregister: true,
   });
 
   const { handleSubmit } = methods;
@@ -48,7 +50,8 @@ export default function DashboardView() {
   }, []);
 
   const onSubmit = handleSubmit((data) => {
-    console.log('Form Submitted!', data);
+    const finalSchema = fillSchemaWithData(schema, data);
+    console.log('Form Submitted!', finalSchema);
   });
 
   return (
