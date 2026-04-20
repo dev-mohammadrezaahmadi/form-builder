@@ -9,6 +9,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { Form } from 'src/components/hook-form';
 
+import { DynamicField } from './dynamic-field';
+
 export default function DashboardView() {
   const [schema, setSchema] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -50,6 +52,12 @@ export default function DashboardView() {
       ) : (
         <Form methods={methods} onSubmit={onSubmit}>
           <Stack spacing={3}>
+            {schema?.appHdr?.element ? (
+              <DynamicField field={schema.appHdr.element} path="" />
+            ) : (
+              <Typography color="error">Failed to load the form schema.</Typography>
+            )}
+
             <Button type="submit" variant="contained" color="primary" size="large">
               Submit Header
             </Button>
