@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react';
+import { z } from 'zod';
+import { useState, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -10,12 +12,22 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Form } from 'src/components/hook-form';
 
 import { DynamicField } from './dynamic-field';
+import { generateZodSchema } from './dynamic-schema';
 
 export default function DashboardView() {
   const [schema, setSchema] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const methods = useForm();
+  const dynamicSchema = useMemo(() => {
+    if (!schema?.appHdr?.element) return z.any();
+    return z.object({
+      [schema.appHdr.element.name]: generateZodSchema(schema.appHdr.element),
+    });
+  }, [schema]);
+
+  const methods = useForm({
+    resolver: zodResolver(dynamicSchema),
+  });
 
   const { handleSubmit } = methods;
 
