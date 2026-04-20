@@ -7,7 +7,7 @@ export function fillSchemaWithData(originalSchema, formData) {
 
     if (node.element_type?.type === 'simple_type') {
       if (data && data[node.name] !== undefined) {
-        node.value = data[node.name];
+        node.element_type.value = data[node.name];
       }
     } 
     else if (node.element_type?.type === 'element_sequence') {
