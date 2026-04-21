@@ -15,7 +15,7 @@ export function generateZodSchema(node) {
         if (restriction?.restriction_type === 'enum_restriction') {
             const options = restriction.children || [];
             if (options.length > 0) {
-                // at least on option should be selected
+                // at least one option should be selected
                 schema = z.string().refine((val) => options.includes(val), {
                     message: `Must be one of: ${options.join(', ')}`,
                 });
@@ -53,11 +53,15 @@ export function generateZodSchema(node) {
         }
 
         if (isRequired && restriction?.base !== 'boolean') {
-            if (schema instanceof z.ZodString) {
+            if (restriction?.base === 'dateTime') {
+                schema = z.any().refine((val) => val !== null && val !== undefined && val !== '', {
+                    message: requiredMsg,
+                });
+            } else if (schema instanceof z.ZodString) {
                 schema = schema.min(1, { message: requiredMsg });
             }
         } else if (!isRequired) {
-            schema = schema.optional().or(z.literal(''));
+            schema = schema.optional().or(z.literal('')).or(z.null());
         }
     }
 
