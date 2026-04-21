@@ -1,1 +1,1 @@
-export * from './dynamic-field'
+export * from './dynamic-field';

@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { useState, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+import { useMemo, useState, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import Box from '@mui/material/Box';
@@ -9,18 +9,19 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { Form } from 'src/components/hook-form';
-import { DynamicField } from 'src/components/dynamic-field'
-import { fillSchemaWithData, getRootNode } from 'src/utils/fill-schema';
 import { generateZodSchema } from 'src/utils/generate-zod-schema';
+import { getRootNode, fillSchemaWithData } from 'src/utils/fill-schema';
 import { generateDefaultValues } from 'src/utils/generate-default-values';
+
+import { Form } from 'src/components/hook-form';
+import { DynamicField } from 'src/components/dynamic-field';
 
 export default function DashboardView() {
   const [schema, setSchema] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const zodSchema = useMemo(() => {
-    const rootNode = getRootNode(schema)
+    const rootNode = getRootNode(schema);
     if (!rootNode) return z.any();
     return z.object({
       [rootNode.name]: generateZodSchema(rootNode),
