@@ -13,6 +13,7 @@ import { Form } from 'src/components/hook-form';
 import { DynamicField } from 'src/components/dynamic-field'
 import { fillSchemaWithData, getRootNode } from 'src/utils/fill-schema';
 import { generateZodSchema } from 'src/utils/generate-zod-schema';
+import { generateDefaultValues } from 'src/utils/generate-default-values';
 
 export default function DashboardView() {
   const [schema, setSchema] = useState(null);
@@ -26,9 +27,18 @@ export default function DashboardView() {
     });
   }, [schema]);
 
+  const defaultValues = useMemo(() => {
+    const rootNode = getRootNode(schema);
+    if (!rootNode) return {};
+    return {
+      [rootNode.name]: generateDefaultValues(rootNode),
+    };
+  }, [schema]);
+
   const methods = useForm({
     resolver: zodResolver(zodSchema),
     shouldUnregister: true,
+    values: defaultValues
   });
 
   const { handleSubmit } = methods;
