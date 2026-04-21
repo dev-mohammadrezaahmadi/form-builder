@@ -30,7 +30,10 @@ export function generateDefaultValues(node) {
         const shape = {};
         const selectedIdx = node.element_type.selected_child_index || 0;
         if (options[selectedIdx]) {
-            shape[options[selectedIdx].name] = generateDefaultValues(options[selectedIdx]);
+            const val = generateDefaultValues(options[selectedIdx]);
+            if (val !== undefined) {
+                shape[options[selectedIdx].name] = val;
+            }
         }
         return shape;
     }
