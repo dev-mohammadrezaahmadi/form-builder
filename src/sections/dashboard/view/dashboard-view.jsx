@@ -38,10 +38,15 @@ export default function DashboardView() {
   const methods = useForm({
     resolver: zodResolver(zodSchema),
     shouldUnregister: true,
-    values: defaultValues
   });
 
-  const { handleSubmit } = methods;
+  const { handleSubmit, reset } = methods;
+
+  useEffect(() => {
+    if (schema) {
+      reset(defaultValues);
+    }
+  }, [schema, defaultValues, reset]);
 
   useEffect(() => {
     const fetchSchema = async () => {
