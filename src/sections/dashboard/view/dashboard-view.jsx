@@ -10,24 +10,24 @@ import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { Form } from 'src/components/hook-form';
-
-import { DynamicField } from './dynamic-field';
-import { generateZodSchema } from './dynamic-schema';
-import { fillSchemaWithData } from './fill-schema';
+import { DynamicField } from 'src/components/dynamic-field'
+import { fillSchemaWithData, getRootNode } from 'src/utils/fill-schema';
+import { generateZodSchema } from 'src/utils/generate-zod-schema';
 
 export default function DashboardView() {
   const [schema, setSchema] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const dynamicSchema = useMemo(() => {
-    if (!schema?.appHdr?.element) return z.any();
+  const zodSchema = useMemo(() => {
+    const rootNode = getRootNode(schema)
+    if (!rootNode) return z.any();
     return z.object({
-      [schema.appHdr.element.name]: generateZodSchema(schema.appHdr.element),
+      [rootNode.name]: generateZodSchema(rootNode),
     });
   }, [schema]);
 
   const methods = useForm({
-    resolver: zodResolver(dynamicSchema),
+    resolver: zodResolver(zodSchema),
     shouldUnregister: true,
   });
 
@@ -51,13 +51,14 @@ export default function DashboardView() {
 
   const onSubmit = handleSubmit((data) => {
     const finalSchema = fillSchemaWithData(schema, data);
+    console.log('Form Data!', data);
     console.log('Form Submitted!', finalSchema);
   });
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto', p: 3 }}>
+    <Box sx={{ mx: 'auto', p: 3 }}>
       <Typography variant="h4" textAlign="center" sx={{ mb: 5 }}>
-        Business Application Header Form
+        RUNC
       </Typography>
 
       {loading ? (
@@ -68,13 +69,13 @@ export default function DashboardView() {
         <Form methods={methods} onSubmit={onSubmit}>
           <Stack spacing={3}>
             {schema?.appHdr?.element ? (
-              <DynamicField field={schema.appHdr.element} path="" />
+              <DynamicField node={schema.appHdr.element} path="" />
             ) : (
               <Typography color="error">Failed to load the form schema.</Typography>
             )}
 
             <Button type="submit" variant="contained" color="primary" size="large">
-              Submit Header
+              Submit
             </Button>
           </Stack>
         </Form>
